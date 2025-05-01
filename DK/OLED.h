@@ -1,92 +1,63 @@
-/**
- * @file     OLED.h
- * @brief    OLED显示屏驱动程序头文件
- * @details  声明OLED显示相关的函数接口，包括：
- *          - 初始化函数
- *          - 显示控制函数
- *          - 字符显示函数
- *          - 数字显示函数
- * @note     适用于0.96寸OLED显示屏（128x64分辨率）
- * @author   DikiFive
- * @date     2025-04-30
- * @version  v1.0
- */
-
 #ifndef __OLED_H
 #define __OLED_H
 
-/**
- * @brief  OLED初始化
- * @details 包括I2C接口初始化和显示参数配置
- * @param  无
- * @return 无
- */
+#include <stdint.h>
+#include "OLED_Data.h"
+
+/*�����궨��*********************/
+
+/*FontSize����ȡֵ*/
+/*�˲���ֵ���������жϣ��������ڼ�������ַ�ƫ�ƣ�Ĭ��ֵΪ�������ؿ���*/
+#define OLED_8X16				8
+#define OLED_6X8				6
+
+/*IsFilled������ֵ*/
+#define OLED_UNFILLED			0
+#define OLED_FILLED				1
+
+/*********************�����궨��*/
+
+
+/*��������*********************/
+
+/*��ʼ������*/
 void OLED_Init(void);
 
-/**
- * @brief  清空显示
- * @details 将显存中所有数据清零
- * @param  无
- * @return 无
- */
+/*���º���*/
+void OLED_Update(void);
+void OLED_UpdateArea(int16_t X, int16_t Y, uint8_t Width, uint8_t Height);
+
+/*�Դ���ƺ���*/
 void OLED_Clear(void);
+void OLED_ClearArea(int16_t X, int16_t Y, uint8_t Width, uint8_t Height);
+void OLED_Reverse(void);
+void OLED_ReverseArea(int16_t X, int16_t Y, uint8_t Width, uint8_t Height);
 
-/**
- * @brief  显示一个字符
- * @param  Line 行号，范围1~4
- * @param  Column 列号，范围1~16
- * @param  Char 要显示的字符（ASCII可见字符）
- * @return 无
- */
-void OLED_ShowChar(uint8_t Line, uint8_t Column, char Char);
+/*��ʾ����*/
+void OLED_ShowChar(int16_t X, int16_t Y, char Char, uint8_t FontSize);
+void OLED_ShowString(int16_t X, int16_t Y, char *String, uint8_t FontSize);
+void OLED_ShowNum(int16_t X, int16_t Y, uint32_t Number, uint8_t Length, uint8_t FontSize);
+void OLED_ShowSignedNum(int16_t X, int16_t Y, int32_t Number, uint8_t Length, uint8_t FontSize);
+void OLED_ShowHexNum(int16_t X, int16_t Y, uint32_t Number, uint8_t Length, uint8_t FontSize);
+void OLED_ShowBinNum(int16_t X, int16_t Y, uint32_t Number, uint8_t Length, uint8_t FontSize);
+void OLED_ShowFloatNum(int16_t X, int16_t Y, double Number, uint8_t IntLength, uint8_t FraLength, uint8_t FontSize);
+void OLED_ShowImage(int16_t X, int16_t Y, uint8_t Width, uint8_t Height, const uint8_t *Image);
+void OLED_Printf(int16_t X, int16_t Y, uint8_t FontSize, char *format, ...);
 
-/**
- * @brief  显示字符串
- * @param  Line 起始行号，范围1~4
- * @param  Column 起始列号，范围1~16
- * @param  String 要显示的字符串，以'\0'结尾
- * @return 无
- */
-void OLED_ShowString(uint8_t Line, uint8_t Column, char *String);
+/*��ͼ����*/
+void OLED_DrawPoint(int16_t X, int16_t Y);
+uint8_t OLED_GetPoint(int16_t X, int16_t Y);
+void OLED_DrawLine(int16_t X0, int16_t Y0, int16_t X1, int16_t Y1);
+void OLED_DrawRectangle(int16_t X, int16_t Y, uint8_t Width, uint8_t Height, uint8_t IsFilled);
+void OLED_DrawTriangle(int16_t X0, int16_t Y0, int16_t X1, int16_t Y1, int16_t X2, int16_t Y2, uint8_t IsFilled);
+void OLED_DrawCircle(int16_t X, int16_t Y, uint8_t Radius, uint8_t IsFilled);
+void OLED_DrawEllipse(int16_t X, int16_t Y, uint8_t A, uint8_t B, uint8_t IsFilled);
+void OLED_DrawArc(int16_t X, int16_t Y, uint8_t Radius, int16_t StartAngle, int16_t EndAngle, uint8_t IsFilled);
 
-/**
- * @brief  显示无符号整数
- * @param  Line 起始行号，范围1~4
- * @param  Column 起始列号，范围1~16
- * @param  Number 要显示的数字，范围0~4294967295
- * @param  Length 显示长度，范围1~10
- * @return 无
- */
-void OLED_ShowNum(uint8_t Line, uint8_t Column, uint32_t Number, uint8_t Length);
+/*********************��������*/
 
-/**
- * @brief  显示有符号整数
- * @param  Line 起始行号，范围1~4
- * @param  Column 起始列号，范围1~16
- * @param  Number 要显示的数字，范围-2147483648~2147483647
- * @param  Length 显示长度（不含符号），范围1~10
- * @return 无
- */
-void OLED_ShowSignedNum(uint8_t Line, uint8_t Column, int32_t Number, uint8_t Length);
+#endif
 
-/**
- * @brief  显示16进制数
- * @param  Line 起始行号，范围1~4
- * @param  Column 起始列号，范围1~16
- * @param  Number 要显示的数字，范围0~0xFFFFFFFF
- * @param  Length 显示长度，范围1~8
- * @return 无
- */
-void OLED_ShowHexNum(uint8_t Line, uint8_t Column, uint32_t Number, uint8_t Length);
 
-/**
- * @brief  显示2进制数
- * @param  Line 起始行号，范围1~4
- * @param  Column 起始列号，范围1~16
- * @param  Number 要显示的数字，范围0~65535
- * @param  Length 显示长度，范围1~16
- * @return 无
- */
-void OLED_ShowBinNum(uint8_t Line, uint8_t Column, uint32_t Number, uint8_t Length);
-
-#endif /* __OLED_H */
+/*****************��Э�Ƽ�|��Ȩ����****************/
+/*****************jiangxiekeji.com*****************/
