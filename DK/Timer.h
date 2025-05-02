@@ -13,6 +13,8 @@
 #define __TIMER_H
 
 #include <stdint.h>
+#include <limits.h>
+#include "stm32f10x.h"
 #include "DK_C8T6.h" // 项目主头文件
 
 /**

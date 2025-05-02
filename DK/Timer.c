@@ -80,12 +80,21 @@ void TIM4_IRQHandler(void)
 {
     if (TIM_GetITStatus(TIM4, TIM_IT_Update) == SET) {
         TIM_ClearITPendingBit(TIM4, TIM_IT_Update); // 清除中断标志位
-        msHcCount++;                                // 超声波计数器自增
-        // 更新系统运行时间
-        ms_count++;
-        if (ms_count >= 1000) {
-            ms_count = 0;
-            system_runtime_s++;
+
+        // 更新系统运行时间（优先处理以保证精度）
+        if (ms_count < UINT32_MAX) {
+            ms_count++;
+            if (ms_count >= 1000) {
+                if (system_runtime_s < UINT32_MAX) {
+                    system_runtime_s++;
+                }
+                ms_count = 0;
+            }
+        }
+
+        // 其他计数器更新
+        if (msHcCount < UINT16_MAX) {
+            msHcCount++;                                // 超声波计数器自增
         }
 
         // 软件延时更新

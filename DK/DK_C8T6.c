@@ -13,7 +13,8 @@ void Sys_Init(void)
     Servo_Init();       // Initialize servo motor
     MQ2_Init();         // Initialize MQ2 smoke sensor
     Timer_Init();       // Initialize timer for tracking
-    // DS1302_GPIO_Init();     // Initialize DS1302 GPIO
-    // DS1302_Init();          // Initialize DS1302
-    // DS1302_read_realTime(); // Read real-time data from DS1302
+
+    // Comment out unused initializations until hardware is ready
+    // Ultrasonic_Init();      // Initialize ultrasonic sensor
+    // usart1_Init(9600);      // Initialize USART1 for voice module
 }
