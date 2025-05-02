@@ -11,8 +11,8 @@
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>ARMCM3</Device>
-          <Vendor>ARM</Vendor>
+          <Device>STM32F103C8</Device>
+          <Vendor>STMicroelectronics</Vendor>
           <PackID>Keil.STM32F1xx_DFP.2.2.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000,0x5000) IROM(0x08000000,0x10000) CPUTYPE(&quot;Cortex-M3&quot;) CLOCK(12000000) ELITTLE</Cpu>
@@ -186,7 +186,7 @@
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
-            <useUlib>0</useUlib>
+            <useUlib>1</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <nSecure>0</nSecure>
@@ -334,9 +334,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls/>
-              <Define>USE_STDPERIPH_DRIVER</Define>
+              <Define>USE_STDPERIPH_DRIVER,STM32F10X_MD</Define>
               <Undefine/>
-              <IncludePath>Start;User;Library;.cmsis\include;RTE\_Target 1;DK</IncludePath>
+              <IncludePath>.;Start;User;Library;.cmsis\include;RTE\_Target 1;DK</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -352,7 +352,7 @@
             <ClangAsOpt>4</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
-              <Define>USE_STDPERIPH_DRIVER</Define>
+              <Define>USE_STDPERIPH_DRIVER,STM32F10X_MD</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
@@ -381,9 +381,9 @@
           <GroupName>DK</GroupName>
           <Files>
             <File>
-              <FileName>AD.c</FileName>
+              <FileName>adcx.c</FileName>
               <FileType>1</FileType>
-              <FilePath>DK/AD.c</FilePath>
+              <FilePath>DK/adcx.c</FilePath>
             </File>
             <File>
               <FileName>BT.c</FileName>
@@ -394,6 +394,11 @@
               <FileName>Buzzer.c</FileName>
               <FileType>1</FileType>
               <FilePath>DK/Buzzer.c</FilePath>
+            </File>
+            <File>
+              <FileName>Common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>DK/Common.c</FilePath>
             </File>
             <File>
               <FileName>Delay.c</FileName>
@@ -409,6 +414,11 @@
               <FileName>DK_C8T6.c</FileName>
               <FileType>1</FileType>
               <FilePath>DK/DK_C8T6.c</FilePath>
+            </File>
+            <File>
+              <FileName>ds1302.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>DK/ds1302.c</FilePath>
             </File>
             <File>
               <FileName>fan.c</FileName>
@@ -431,9 +441,19 @@
               <FilePath>DK/Motor.c</FilePath>
             </File>
             <File>
+              <FileName>mq2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>DK/mq2.c</FilePath>
+            </File>
+            <File>
               <FileName>OLED.c</FileName>
               <FileType>1</FileType>
               <FilePath>DK/OLED.c</FilePath>
+            </File>
+            <File>
+              <FileName>OLED_Data.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>DK/OLED_Data.c</FilePath>
             </File>
             <File>
               <FileName>PWM.c</FileName>
@@ -451,19 +471,29 @@
               <FilePath>DK/SD12.c</FilePath>
             </File>
             <File>
-              <FileName>Serial.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>DK/Serial.c</FilePath>
-            </File>
-            <File>
               <FileName>Servo.c</FileName>
               <FileType>1</FileType>
               <FilePath>DK/Servo.c</FilePath>
             </File>
             <File>
+              <FileName>sys.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>DK/sys.c</FilePath>
+            </File>
+            <File>
               <FileName>Timer.c</FileName>
               <FileType>1</FileType>
               <FilePath>DK/Timer.c</FilePath>
+            </File>
+            <File>
+              <FileName>ultrasonic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>DK/ultrasonic.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>DK/usart1.c</FilePath>
             </File>
           </Files>
         </Group>

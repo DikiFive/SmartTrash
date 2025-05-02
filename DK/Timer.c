@@ -11,8 +11,7 @@
  * @version  v1.0
  */
 
-#include "stm32f10x.h" // STM32F10x外设库头文件
-#include "Timer.h"     // 项目主头文件
+#include "Timer.h" // 项目主头文件
 
 /**
  * @brief 系统定时相关变量
@@ -20,7 +19,7 @@
 uint32_t TimingDelay      = 0; /**< 软件延时计数器 */
 uint32_t system_runtime_s = 0; /**< 系统运行时间（秒） */
 uint32_t ms_count         = 0; /**< 毫秒计数器 */
-extern u16 msHcCount;          /**< 超声波计数 */
+extern u16 time;               /**< 超声波计数 */
 
 /**
  * @brief  定时器初始化
@@ -45,8 +44,8 @@ void Timer_Init(void)
     TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;
     TIM_TimeBaseInitStructure.TIM_ClockDivision     = TIM_CKD_DIV1;       // 不分频
     TIM_TimeBaseInitStructure.TIM_CounterMode       = TIM_CounterMode_Up; // 向上计数
-    TIM_TimeBaseInitStructure.TIM_Period            = 1000 - 1;           // ARR值，1ms
-    TIM_TimeBaseInitStructure.TIM_Prescaler         = 72 - 1;             // PSC值
+    TIM_TimeBaseInitStructure.TIM_Period            = 10 - 1;             // ARR值，10us
+    TIM_TimeBaseInitStructure.TIM_Prescaler         = 72 - 1;             // PSC值, 72MHz/72=1MHz
     TIM_TimeBaseInitStructure.TIM_RepetitionCounter = 0;                  // 不重复计数
     TIM_TimeBaseInit(TIM4, &TIM_TimeBaseInitStructure);
 
@@ -81,26 +80,28 @@ void TIM4_IRQHandler(void)
     if (TIM_GetITStatus(TIM4, TIM_IT_Update) == SET) {
         TIM_ClearITPendingBit(TIM4, TIM_IT_Update); // 清除中断标志位
 
-        // 更新系统运行时间（优先处理以保证精度）
-        if (ms_count < UINT32_MAX) {
-            ms_count++;
-            if (ms_count >= 1000) {
-                if (system_runtime_s < UINT32_MAX) {
-                    system_runtime_s++;
+        // 更新系统运行时间（每100次10us = 1ms）
+        static uint16_t us_count = 0;
+        us_count++;
+        if (us_count >= 100) {
+            us_count = 0;
+            // 更新毫秒计数
+            if (ms_count < UINT32_MAX) {
+                ms_count++;
+                if (ms_count >= 1000) {
+                    if (system_runtime_s < UINT32_MAX) {
+                        system_runtime_s++;
+                    }
+                    ms_count = 0;
                 }
-                ms_count = 0;
+            }
+            // 软件延时更新（基于ms）
+            if (TimingDelay > 0) {
+                TimingDelay--;
             }
         }
 
-        // 其他计数器更新
-        if (msHcCount < UINT16_MAX) {
-            msHcCount++;                                // 超声波计数器自增
-        }
-
-        // 软件延时更新
-        if (TimingDelay > 0) {
-            TimingDelay--;
-        }
+        time++; // 超声波计数
     }
 }
 
