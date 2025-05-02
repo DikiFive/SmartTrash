@@ -60,15 +60,8 @@ float MQ2_GetData_PPM(void)
     // char flag=0;
 
     for (uint8_t i = 0; i < MQ2_READ_TIMES; i++) {
-
-        //		 flag++;     //此处是解析GPS的数据，大约就是25秒解析一下GPS的数据
-        //			  if(flag==5)
-        //				{
-        //						flag=0;
         tempData += MQ2_ADC_Read();
-        Delay_ms(2);
-        //}
-        // delay_ms(5);
+        Delay_ms(5);
     }
     tempData /= MQ2_READ_TIMES;
 

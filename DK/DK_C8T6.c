@@ -19,10 +19,9 @@ void Sys_Init(void)
     // Buzzer_Init();     // Initialize buzzer
     usart1_Init(9600);  // Initialize USART1 with baud rate 9600
     CountSensor_Init(); // Initialize red infrared sensors
-
-    MQ2_Init();     // Initialize MQ2 smoke sensor
-    Timer_Init();   // Initialize timer for tracking
-    HC_SR04_Init(); // Initialize ultrasonic sensor
+    MQ2_Init();         // Initialize MQ2 smoke sensor
+    Timer_Init();       // Initialize timer for tracking
+    HC_SR04_Init();     // Initialize ultrasonic sensor
 }
 
 void InitTrashSystem(void)
