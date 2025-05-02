@@ -12,20 +12,15 @@
  */
 
 #include "stm32f10x.h" // STM32F10x外设库头文件
-#include "dk_C8T6.h"   // 项目主头文件
+#include "Timer.h"     // 项目主头文件
 
 /**
  * @brief 系统定时相关变量
  */
-uint32_t TimingDelay       = 0; /**< 软件延时计数器 */
-uint32_t system_runtime_s  = 0; /**< 系统运行时间（秒） */
-uint32_t ms_count          = 0; /**< 毫秒计数器 */
-uint32_t uv_timer_ms       = 0; /**< 红外触发UV灯计时器 */
-uint8_t uv_infrared_active = 0; /**< 红外触发UV灯工作标志 */
-uint32_t cycle_timer_ms    = 0; /**< 循环模式计时器 */
-uint8_t cycle_state        = 0; /**< 循环模式状态 */
-uint8_t update_flag        = 0; /**< 定时更新标志 */
-extern u16 msHcCount;           /**< 超声波计数 */
+uint32_t TimingDelay      = 0; /**< 软件延时计数器 */
+uint32_t system_runtime_s = 0; /**< 系统运行时间（秒） */
+uint32_t ms_count         = 0; /**< 毫秒计数器 */
+extern u16 msHcCount;          /**< 超声波计数 */
 
 /**
  * @brief  定时器初始化
@@ -85,7 +80,7 @@ void TIM4_IRQHandler(void)
 {
     if (TIM_GetITStatus(TIM4, TIM_IT_Update) == SET) {
         TIM_ClearITPendingBit(TIM4, TIM_IT_Update); // 清除中断标志位
-
+        msHcCount++;                                // 超声波计数器自增
         // 更新系统运行时间
         ms_count++;
         if (ms_count >= 1000) {
@@ -97,22 +92,6 @@ void TIM4_IRQHandler(void)
         if (TimingDelay > 0) {
             TimingDelay--;
         }
-
-        // 更新UV灯定时器
-        if (uv_infrared_active) {
-            uv_timer_ms++;
-        }
-
-        // 更新循环模式定时器
-        if (cycle_state) {
-            cycle_timer_ms++;
-            if (cycle_timer_ms >= 10000) {
-                cycle_timer_ms = 0;
-            }
-        }
-
-        // 设置定时更新标志
-        update_flag = 1;
     }
 }
 

@@ -5,7 +5,7 @@
  * @param  ADCx_Instance: 选择需要初始化的ADC外设，可以是ADC1, ADC2, 或ADC3
  * @retval 无
  */
-void ADCx_Init(ADC_TypeDef* ADCx_Instance)
+void ADCx_Init(ADC_TypeDef *ADCx_Instance)
 {
     // 开启ADC时钟
     if (ADCx_Instance == ADC1) {
@@ -46,7 +46,7 @@ void ADCx_Init(ADC_TypeDef* ADCx_Instance)
  * @param  ADC_SampleTime  选择需要采样时间
  * @retval 返回转换后的模拟信号数值
  */
-u16 ADC_GetValue(ADC_TypeDef* ADCx_Instance, uint8_t ADC_Channel, uint8_t ADC_SampleTime)
+u16 ADC_GetValue(ADC_TypeDef *ADCx_Instance, uint8_t ADC_Channel, uint8_t ADC_SampleTime)
 {
     // 配置ADC通道
     ADC_RegularChannelConfig(ADCx_Instance, ADC_Channel, 1, ADC_SampleTime);
