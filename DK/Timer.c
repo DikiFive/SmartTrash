@@ -16,10 +16,10 @@
 /**
  * @brief 系统定时相关变量
  */
-uint32_t TimingDelay      = 0; /**< 软件延时计数器 */
-uint32_t system_runtime_s = 0; /**< 系统运行时间（秒） */
-uint32_t ms_count         = 0; /**< 毫秒计数器 */
-extern u16 time;               /**< 超声波计数 */
+uint32_t TimingDelay       = 0; /**< 软件延时计数器 */
+uint32_t system_runtime_s  = 0; /**< 系统运行时间（秒） */
+uint32_t system_runtime_ms = 0; /**< 系统运行时间（毫秒） */
+extern u16 time;                /**< 超声波计数 */
 
 /**
  * @brief  定时器初始化
@@ -85,14 +85,11 @@ void TIM4_IRQHandler(void)
         us_count++;
         if (us_count >= 100) {
             us_count = 0;
-            // 更新毫秒计数
-            if (ms_count < UINT32_MAX) {
-                ms_count++;
-                if (ms_count >= 1000) {
-                    if (system_runtime_s < UINT32_MAX) {
-                        system_runtime_s++;
-                    }
-                    ms_count = 0;
+            // 更新系统运行时间（毫秒和秒）
+            if (system_runtime_ms < UINT32_MAX) {
+                system_runtime_ms++;
+                if (system_runtime_ms % 1000 == 0 && system_runtime_s < UINT32_MAX) {
+                    system_runtime_s++;
                 }
             }
             // 软件延时更新（基于ms）

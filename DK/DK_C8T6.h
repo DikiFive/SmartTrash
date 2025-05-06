@@ -30,6 +30,7 @@
 #include "OLED.h"
 #include "RED.h"
 #include "usart1.h"
+#include "UART3.h"
 #include "Servo.h"
 #include "Timer.h"
 
@@ -42,6 +43,10 @@ void CheckCleanupTimeout(void);    // 检查清理超时
 void UpdateStatusIndicators(void); // 更新状态指示器
 void UpdateOLEDDisplay(void);      // 更新OLED显示
 void InitTrashSystem(void);        // 初始化垃圾桶系统状态
+
+// 新增模块化功能函数
+void HandleUltrasonicSensor(void); // 处理超声波传感器和自动开关盖逻辑
+void ProcessSerialCommands(void);  // 处理串口命令（如语音控制）
 
 // 获取系统运行时间(秒)
 extern uint32_t system_runtime_s;

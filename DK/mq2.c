@@ -65,12 +65,25 @@ float MQ2_GetData_PPM(void)
     }
     tempData /= MQ2_READ_TIMES;
 
-    float Vol = (tempData * 5 / 4096);
-    float RS  = (5 - Vol) / (Vol * 0.5);
-    float R0  = 6.64;
+    // 使用3.3V作为参考电压
+    float Vol = (tempData * 3.3f / 4096);
+    if(Vol < 0.1f) return 1;  // 防止分母接近0导致计算错误
 
-    float ppm = pow(11.5428 * R0 / RS, 0.6549f);
+    float RS = (3.3f - Vol) / Vol;  // 传感器电阻，不需要0.5系数，因为已在电路中分压
+    float R0 = 9.8f;  // 在洁净空气中测得的电阻值
 
-    return ppm;
+    // 使用MQ2传感器的特性曲线进行计算
+    // PPM = a * (RS/R0)^b
+    // 其中 a = 658.9, b = -2.013 是根据MQ2数据手册的特性曲线拟合得到
+    float ratio = RS / R0;
+    if(ratio < 0.01f) return 9999;  // 防止比值过小导致计算错误
+
+    float ppm = 658.9f * pow(ratio, -2.013f);
+
+    // 限制返回值范围
+    if(ppm > 9999.0f) return 9999;
+    if(ppm < 1.0f) return 1;
+
+    return (uint16_t)ppm;
 #endif
 }

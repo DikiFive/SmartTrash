@@ -54,4 +54,8 @@ void DS1302_read_realTime(void);            // 将BCD码转化为十进制数据
 void DS1302_wirteRAM(void);
 void DS1302_readRAM(void);
 
+// 设置DS1302时间
+void DS1302_SetTime(uint16_t year, uint8_t month, uint8_t day,
+                    uint8_t hour, uint8_t minute, uint8_t second, uint8_t week);
+
 #endif

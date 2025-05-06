@@ -19,10 +19,10 @@
 /**
  * @brief 定时器相关变量声明
  */
-extern uint32_t TimingDelay;      /**< 软件延时计数器 */
-extern uint32_t system_runtime_s; /**< 系统运行时间（秒） */
-extern uint32_t ms_count;         /**< 毫秒计数器 */
-extern uint8_t update_flag;       /**< 定时更新标志 */
+extern uint32_t TimingDelay;       /**< 软件延时计数器 */
+extern uint32_t system_runtime_s;  /**< 系统运行时间（秒） */
+extern uint32_t system_runtime_ms; /**< 系统运行时间（毫秒） */
+extern uint8_t update_flag;        /**< 定时更新标志 */
 
 /**
  * @brief  定时器初始化

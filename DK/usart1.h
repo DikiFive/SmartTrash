@@ -7,6 +7,7 @@
 
 extern u8 USART1_RX_STA; // 接收状态标记
 extern u8 USART1_RX_CMD;
+extern u8 USART1_NewCmd; // 新命令标志位，主循环检查后需要清零
 
 void usart1_Init(u32 bound);
 

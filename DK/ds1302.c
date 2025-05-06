@@ -107,13 +107,13 @@ u8 DS1302_read_rig(u8 address) // 从指定地址读取一字节数据
 void DS1302_Init(void)
 {
     DS1302_wirte_rig(0x8e, 0x00); // 关闭写保护
-    DS1302_wirte_rig(0x80, 0x00); // seconds00秒
-    DS1302_wirte_rig(0x82, 0x30); // minutes30分
-    DS1302_wirte_rig(0x84, 0x20); // hours20时
-    DS1302_wirte_rig(0x86, 0x03); // date3日
-    DS1302_wirte_rig(0x88, 0x10); // months10月
-    DS1302_wirte_rig(0x8a, 0x04); // days星期四
-    DS1302_wirte_rig(0x8c, 0x24); // year2024年
+    DS1302_wirte_rig(0x80, 0x00); // seconds 00秒 (BCD: 00)
+    DS1302_wirte_rig(0x82, 0x17); // minutes 17分 (BCD: 0x17)
+    DS1302_wirte_rig(0x84, 0x20); // hours 20时 (BCD: 0x20)
+    DS1302_wirte_rig(0x86, 0x06); // date 6日 (BCD: 0x06)
+    DS1302_wirte_rig(0x88, 0x05); // months 5月 (BCD: 0x05)
+    DS1302_wirte_rig(0x8a, 0x02); // days 星期二 (BCD: 0x02)
+    DS1302_wirte_rig(0x8c, 0x25); // year 25年 (BCD: 0x25)
     DS1302_wirte_rig(0x8e, 0x80); // 开启写保护
 }
 
@@ -159,4 +159,25 @@ void DS1302_readRAM(void)
     TimeRAM.minute_guan = DS1302_read_rig(0xC7); // 读日
     TimeRAM.kai         = DS1302_read_rig(0xC9); // 读日
     TimeRAM.guan        = DS1302_read_rig(0xCB); // 读日
+}
+
+// 将十进制数转换为BCD码
+static uint8_t DecToBcd(uint8_t dec)
+{
+    return ((dec / 10) << 4) | (dec % 10);
+}
+
+// 设置DS1302时间
+void DS1302_SetTime(uint16_t year, uint8_t month, uint8_t day,
+                    uint8_t hour, uint8_t minute, uint8_t second, uint8_t week)
+{
+    DS1302_wirte_rig(0x8e, 0x00);           // 关闭写保护
+    DS1302_wirte_rig(0x80, DecToBcd(second)); // 设置秒
+    DS1302_wirte_rig(0x82, DecToBcd(minute)); // 设置分
+    DS1302_wirte_rig(0x84, DecToBcd(hour));   // 设置时
+    DS1302_wirte_rig(0x86, DecToBcd(day));    // 设置日
+    DS1302_wirte_rig(0x88, DecToBcd(month));  // 设置月
+    DS1302_wirte_rig(0x8a, DecToBcd(week));   // 设置星期
+    DS1302_wirte_rig(0x8c, DecToBcd(year % 100)); // 设置年(只存储后两位)
+    DS1302_wirte_rig(0x8e, 0x80);           // 开启写保护
 }

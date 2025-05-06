@@ -15,6 +15,7 @@
 
 **********************************************************************************************************************/
 #include "usart1.h"
+#include "UART3.h"
 
 // #include "usart2.h"
 
@@ -47,7 +48,8 @@
 static int Send_buf[10] = {0};
 
 u8 USART1_RX_STA = 0; // 接收状态标记
-u8 USART1_RX_CMD;
+u8 USART1_RX_CMD;     // 存储接收到的命令
+u8 USART1_NewCmd = 0; // 新命令标志位，主循环检查后需要清零
 
 /******************************************************************************
 * 模块描述
@@ -202,7 +204,7 @@ void USART1_IRQHandler(void) // 串口2中断服务程序
     {
         Res           = USART_ReceiveData(USART1); // 读取接收到的数据
         USART1_RX_CMD = Res;                       // 把接收到的数据传递给USART_RX_CMD
-        USART1_RX_STA = 1;                         // 去进入主函数WHILE语句
+        USART1_NewCmd = 1;                         // 设置新命令标志位
     }
 }
 
