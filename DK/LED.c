@@ -53,24 +53,24 @@ void LED_All_Init(void)
 
 /**
  * @brief  打开LED1
- * @details 将PA8设置为低电平，点亮LED1
+ * @details 将PA8设置为高电平，点亮LED1
  * @param  无
  * @return 无
  */
 void LED1_ON(void)
 {
-    GPIO_ResetBits(LED1_GPIO_PORT, LED1_GPIO_PIN); // 设置PA8引脚为低电平
+    GPIO_SetBits(LED1_GPIO_PORT, LED1_GPIO_PIN); // 设置PA8引脚为高电平
 }
 
 /**
  * @brief  关闭LED1
- * @details 将PA8设置为高电平，熄灭LED1
+ * @details 将PA8设置为低电平，熄灭LED1
  * @param  无
  * @return 无
  */
 void LED1_OFF(void)
 {
-    GPIO_SetBits(LED1_GPIO_PORT, LED1_GPIO_PIN); // 设置PA8引脚为高电平
+    GPIO_ResetBits(LED1_GPIO_PORT, LED1_GPIO_PIN); // 设置PA8引脚为低电平
 }
 
 /**
@@ -92,24 +92,24 @@ void LED1_Turn(void)
 
 /**
  * @brief  打开LED2
- * @details 将PA12设置为低电平，点亮LED2
+ * @details 将PA12设置为高电平，点亮LED2
  * @param  无
  * @return 无
  */
 void LED2_ON(void)
 {
-    GPIO_ResetBits(LED2_GPIO_PORT, LED2_GPIO_PIN); // 设置PA12引脚为低电平
+    GPIO_SetBits(LED2_GPIO_PORT, LED2_GPIO_PIN); // 设置PA12引脚为高电平
 }
 
 /**
  * @brief  关闭LED2
- * @details 将PA12设置为高电平，熄灭LED2
+ * @details 将PA12设置为低电平，熄灭LED2
  * @param  无
  * @return 无
  */
 void LED2_OFF(void)
 {
-    GPIO_SetBits(LED2_GPIO_PORT, LED2_GPIO_PIN); // 设置PA12引脚为高电平
+    GPIO_ResetBits(LED2_GPIO_PORT, LED2_GPIO_PIN); // 设置PA12引脚为低电平
 }
 
 /**
@@ -131,24 +131,24 @@ void LED2_Turn(void)
 
 /**
  * @brief  打开系统LED
- * @details 将PC13设置为低电平，点亮系统LED
+ * @details 将PC13设置为高电平，点亮系统LED
  * @param  无
  * @return 无
  */
 void LED_Sys_ON(void)
 {
-    GPIO_ResetBits(LED_SYS_GPIO_PORT, LED_SYS_GPIO_PIN); // 设置PC13引脚为低电平
+    GPIO_SetBits(LED_SYS_GPIO_PORT, LED_SYS_GPIO_PIN); // 设置PC13引脚为高电平
 }
 
 /**
  * @brief  关闭系统LED
- * @details 将PC13设置为高电平，熄灭系统LED
+ * @details 将PC13设置为低电平，熄灭系统LED
  * @param  无
  * @return 无
  */
 void LED_Sys_OFF(void)
 {
-    GPIO_SetBits(LED_SYS_GPIO_PORT, LED_SYS_GPIO_PIN); // 设置PC13引脚为高电平
+    GPIO_ResetBits(LED_SYS_GPIO_PORT, LED_SYS_GPIO_PIN); // 设置PC13引脚为低电平
 }
 
 /**
