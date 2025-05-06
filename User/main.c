@@ -15,10 +15,10 @@
 int main(void)
 {
     /* 系统初始化 */
-    Sys_Init();                               // 初始化外设和GPIO
-    InitTrashSystem();                        // 初始化垃圾桶系统状态和状态变量
-    //DS1302_SetTime(2025, 5, 6, 20, 25, 0, 2); // 年,月,日,时,分,秒,星期
-
+    Sys_Init();        // 初始化外设和GPIO
+    InitTrashSystem(); // 初始化垃圾桶系统状态和状态变量
+    // DS1302_SetTime(2025, 5, 6, 20, 25, 0, 2); // 年,月,日,时,分,秒,星期
+    // 校准时间才使用，校准后注释掉，再重新编译下载
     while (1) {
         ProcessSerialCommands();  // 处理串口命令（如语音控制）
         HandleUltrasonicSensor(); // 处理超声波传感器和自动开关盖
