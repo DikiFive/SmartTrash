@@ -12,11 +12,11 @@ static uint8_t time_overflow        = 0; // 时间溢出标志
 
 void Sys_Init(void)
 {
-    ADCx_Init(ADC1); // Initialize ADC1
-    OLED_Init();     // Initialize OLED display
-    LED_All_Init();  // Initialize LED
-    Servo_Init();    // Initialize servo motor
-    // Buzzer_Init();     // Initialize buzzer
+    ADCx_Init(ADC1);    // Initialize ADC1
+    OLED_Init();        // Initialize OLED display
+    LED_All_Init();     // Initialize LED
+    Servo_Init();       // Initialize servo motor
+    Buzzer_Init();      // Initialize buzzer
     usart1_Init(9600);  // Initialize USART1 with baud rate 9600
     CountSensor_Init(); // Initialize red infrared sensors
     MQ2_Init();         // Initialize MQ2 smoke sensor

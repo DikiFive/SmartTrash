@@ -115,3 +115,4 @@ uint8_t Sensor_GetValue2()
     uint8_t Num = GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_1);
     return Num;
 }
+// Compare this snippet from DK/RED.c:
